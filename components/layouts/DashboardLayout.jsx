@@ -19,9 +19,8 @@ const toastOptions = {
 };
 
 export const DashboardLayout = (props) => {
+  const router = useRouter();
   const { title, children } = props;
-
-  let router = useRouter();
 
   const handleNavigate = (url) => {
     router.push(url);
@@ -30,6 +29,15 @@ export const DashboardLayout = (props) => {
   const getCurrentYear = () => {
     return new Date().getFullYear();
   };
+
+  React.useEffect(() => {
+    if (
+      localStorage.getItem("user") === null &&
+      localStorage.getItem("accessToken") === null
+    ) {
+      router.push("/");
+    }
+  }, []);
 
   return (
     <>
@@ -43,6 +51,8 @@ export const DashboardLayout = (props) => {
         <DashboardSidebarNavigation handleNavigate={handleNavigate} />
 
         <Container fluid className="dashboard-content">
+          <DashboardNavbarNavigation />
+
           <Container fluid className="dashboard-page-content">
             <Container className="dashboard-page-content-body">
               <Container fluid className="mb-4">

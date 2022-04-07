@@ -1,9 +1,18 @@
 import React from "react";
+import { useRouter } from "next/router";
 import { Navbar, Nav, Container } from "react-bootstrap";
 import Hamburger from "hamburger-react";
 
 export const DashboardNavbarNavigation = (props) => {
+  const router = useRouter();
   const [isToggled, setIsToggled] = React.useState(false);
+
+  const handleLogout = () => {
+    localStorage.removeItem("user");
+    localStorage.removeItem("accessToken");
+
+    router.replace("/");
+  };
 
   return (
     <Navbar bg="light" expand="lg">
@@ -15,7 +24,9 @@ export const DashboardNavbarNavigation = (props) => {
 
         <Navbar.Collapse className="justify-content-end">
           <Nav>
-            <Nav.Link href="#">My Account</Nav.Link>
+            <Nav.Link href="#" onClick={handleLogout}>
+              Logout
+            </Nav.Link>
           </Nav>
         </Navbar.Collapse>
       </Container>

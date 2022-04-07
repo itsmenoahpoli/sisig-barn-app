@@ -4,51 +4,54 @@ import { useForm } from "react-hook-form";
 
 import { DashboardLayout } from "components/layouts";
 import { TableBuilder } from "components/tables";
-import { ProductForm } from "components/forms/by-modules";
-import { ProductsService } from "lib/services";
+import { EmployeeForm } from "components/forms/by-modules";
+import { EmployeeService } from "lib/services";
 
-const productsService = new ProductsService();
+const employeesService = new EmployeeService();
 
-const ProductsPage = () => {
+const EmployeesPage = () => {
   const [search, setSearch] = React.useState("");
   const [data, setData] = React.useState([]);
   const [loading, setLoading] = React.useState(false);
-  const [productModal, setProductModal] = React.useState({
+  const [employeeModal, setEmployeeModal] = React.useState({
     show: false,
     data: null,
   });
 
-  const getProducts = async (search) => {
+  const getEmployees = async (search) => {
     setLoading(true);
-    const { data } = await productsService.getAll(search);
+    const { data } = await employeesService.getAll(search);
 
     setData(data);
     setLoading(false);
   };
 
   const handleFormSubmit = async (formData) => {
-    if (productModal.data) {
-      await productsService.updateProductById(productModal.data.id, formData);
-      await getProducts("");
-      setProductModal({ show: false, data: null });
+    if (employeeModal.data) {
+      await employeesService.updateEmployeeById(
+        employeeModal.data.id,
+        formData
+      );
+      await getEmployees("");
+      handleEmployeeModal(false, null);
 
       return;
     }
 
-    await productsService.createProduct(formData);
-    await getProducts("");
+    await employeesService.createEmployee(formData);
+    await getEmployees("");
 
-    handleProductModal(false, null);
+    handleEmployeeModal(false, null);
   };
 
   const handleEditProduct = (data) => {
-    handleProductModal(true, data);
+    handleEmployeeModal(true, data);
   };
 
-  const handleDeleteProduct = async (productId) => {
-    if (confirm("Do you confirm to delete this product?")) {
-      await productsService.deleteProductById(productId);
-      await getProducts("");
+  const handleDeleteProduct = async (employeeId) => {
+    if (confirm("Do you confirm to delete this employee record?")) {
+      await employeesService.deleteEmployeeById(employeeId);
+      await getEmployees("");
     }
   };
 
@@ -56,30 +59,40 @@ const ProductsPage = () => {
     setSearch(search);
   };
 
-  const handleProductModal = (show, data) => {
-    setProductModal({ show: show, data: data });
+  const handleEmployeeModal = (show, data) => {
+    setEmployeeModal({ show: show, data: data });
+  };
+
+  const formatEmployeeContacts = (contacts) => {
+    return contacts;
   };
 
   const tableColumns = React.useMemo(
     () => [
       {
-        name: "Product",
+        name: "Employee No.",
+        selector: (row) => row.emp_no,
+        sortable: true,
+      },
+      {
+        name: "Name",
         selector: (row) => row.name,
         sortable: true,
       },
       {
-        name: "Category",
-        selector: (row) => row.category,
+        name: "Email",
+        selector: (row) => row.email,
         sortable: true,
       },
       {
-        name: "Price",
-        selector: (row) => row.price,
+        name: "Contacts",
+        selector: (row) => row.contacts,
         sortable: true,
+        cell: (row) => formatEmployeeContacts(row.contacts),
       },
       {
-        name: "Description",
-        selector: (row) => row.description,
+        name: "Address",
+        selector: (row) => row.address,
         sortable: true,
       },
       {
@@ -111,23 +124,23 @@ const ProductsPage = () => {
   );
 
   React.useEffect(() => {
-    getProducts(search);
+    getEmployees(search);
   }, []);
 
   React.useEffect(() => {
     if (search !== "") {
-      getProducts(search);
+      getEmployees(search);
     }
   }, [search]);
   return (
-    <DashboardLayout title="Products">
+    <DashboardLayout title="Employees">
       <Container fluid className="datatable-header">
         <div>
           <Button
             variant="primary"
-            onClick={() => handleProductModal(true, null)}
+            onClick={() => handleEmployeeModal(true, null)}
           >
-            Add New Product
+            Add New Employee
           </Button>
         </div>
 
@@ -151,16 +164,16 @@ const ProductsPage = () => {
       {/* MODAL */}
       <Modal
         size="lg"
-        show={productModal.show}
-        onHide={() => handleProductModal(false, null)}
+        show={employeeModal.show}
+        onHide={() => handleEmployeeModal(false, null)}
       >
         <Modal.Header closeButton>
-          <Modal.Title>Product Form</Modal.Title>
+          <Modal.Title>Employee Form</Modal.Title>
         </Modal.Header>
 
         <Modal.Body>
-          <ProductForm
-            values={productModal.data}
+          <EmployeeForm
+            values={employeeModal.data}
             formFns={{ formSubmitFn: handleFormSubmit }}
           />
         </Modal.Body>
@@ -169,4 +182,4 @@ const ProductsPage = () => {
   );
 };
 
-export default ProductsPage;
+export default EmployeesPage;

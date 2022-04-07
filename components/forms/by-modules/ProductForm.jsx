@@ -45,10 +45,6 @@ export const ProductForm = (props) => {
             <option value="Add-ons">Add-ons</option>
           </Form.Select>
         </FloatingLabel>
-
-        {Boolean(errors && errors.name?.type === "required") && (
-          <small className="text-danger">This field is required</small>
-        )}
       </Form.Group>
 
       <Form.Group className="form-group">
@@ -65,10 +61,6 @@ export const ProductForm = (props) => {
             placeholder="Name"
           />
         </FloatingLabel>
-
-        {Boolean(errors && errors.name?.type === "required") && (
-          <small className="text-danger">This field is required</small>
-        )}
       </Form.Group>
 
       <Form.Group className="form-group">
@@ -85,10 +77,6 @@ export const ProductForm = (props) => {
             placeholder="Price"
           />
         </FloatingLabel>
-
-        {Boolean(errors && errors.price?.type === "required") && (
-          <small className="text-danger">This field is required</small>
-        )}
       </Form.Group>
 
       <Form.Group className="form-group">
@@ -107,10 +95,6 @@ export const ProductForm = (props) => {
             style={{ height: "140px" }}
           />
         </FloatingLabel>
-
-        {Boolean(errors && errors.description?.type === "required") && (
-          <small className="text-danger">This field is required</small>
-        )}
       </Form.Group>
 
       <Button type="submit">SUBMIT PRODUCT DETAILS</Button>

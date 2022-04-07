@@ -20,7 +20,7 @@ import { OrdersService } from "lib/services";
 TimeAgo.addDefaultLocale(en);
 const ordersService = new OrdersService();
 
-const ProductsPage = () => {
+const OrdersPage = () => {
   const [search, setSearch] = React.useState("");
   const [data, setData] = React.useState([]);
   const [loading, setLoading] = React.useState(false);
@@ -76,7 +76,9 @@ const ProductsPage = () => {
         name: "Order Time",
         selected: (row) => row.created_at,
         sortable: true,
-        cell: (row) => <ReactTimeAgo date={row.created_at} locale="en-US" />,
+        cell: (row) => (
+          <ReactTimeAgo date={new Date(row.created_at)} locale="en-US" />
+        ),
       },
       {
         name: "Total Amount",
@@ -206,4 +208,4 @@ const ProductsPage = () => {
   );
 };
 
-export default ProductsPage;
+export default OrdersPage;

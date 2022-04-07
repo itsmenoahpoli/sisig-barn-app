@@ -38,7 +38,7 @@ const sidebarLinks = [
   },
   {
     name: "Employee Payslips",
-    url: "/app/dashboard/employees/payslips/",
+    url: "/app/dashboard/employee-payslips/",
     icon: <FiArchive />,
   },
 ];
