@@ -27,8 +27,6 @@ const LandingPage = () => {
     await axios
       .post("http://localhost:8000/api/v1/auth/login", formData)
       .then((response) => {
-        console.log(response);
-
         localStorage.setItem("user", response.data.user);
         localStorage.setItem("accessToken", response.data.accessToken);
 

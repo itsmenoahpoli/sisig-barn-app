@@ -337,7 +337,53 @@ form {
   }
 }
 
-.auth-container {
-  height: 100vh;
+.auth-container,
+.kiosk-layout {
+  height: 100%;
   background: #ffa652 !important;
+}
+
+.kiosk-layout {
+  position: relative;
+
+  .body {
+    padding: 50px 30px !important;
+
+    .order-card {
+      position: sticky;
+      top: 1rem;
+      height: 85vh;
+
+      .cart-container {
+        height: 70vh;
+        overflow-y: scroll;
+      }
+    }
+
+    .menu-card {
+      height: 400px;
+      margin-bottom: 15px;
+
+      .card-body {
+        overflow-y: scroll;
+
+        .product-scroll-container {
+          .product-item {
+            padding: 10px;
+
+            .product-item-content {
+              border-radius: 10px;
+              background: #eee;
+              padding: 10px 15px;
+
+              button {
+                color: #fff;
+                width: 100%;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
 }

@@ -46,7 +46,7 @@ const OrdersPage = () => {
   };
 
   const handleMarkOrderAsServed = async () => {
-    await ordersService.updateProductById(orderModal.data.id, {
+    await ordersService.updateOrderById(orderModal.data.id, {
       status: "SERVED",
     });
     await getOrders("");
