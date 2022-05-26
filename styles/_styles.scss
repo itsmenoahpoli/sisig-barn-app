@@ -337,13 +337,14 @@ form {
   }
 }
 
-.auth-container,
-.kiosk-layout {
+.auth-container {
   height: 100vh;
   background: #ffa652 !important;
 }
 
 .kiosk-layout {
+  background: #ffa652 !important;
+  height: 100% !important;
   position: relative;
 
   .body {
