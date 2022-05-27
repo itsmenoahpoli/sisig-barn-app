@@ -142,8 +142,12 @@ const KioskPage = () => {
   };
 
   const handleCheckout = async () => {
+    // const devURL = "http://localhost:8000/api/v1";
+    const prodURL = "https://sisig-barn-app.pwnp-ws.com/public/api/v1";
+
+    const axiosBaseURL = prodURL;
     await axios
-      .post("http://localhost:8000/api/v1/orders/", {
+      .post(`${axiosBaseURL}/orders/`, {
         table: 1,
         order_cart: cart,
         total_amount: parseInt(cart[0].price) + parseInt(totalAmount),
