@@ -67,6 +67,7 @@ export const ProductForm = (props) => {
         <FloatingLabel label="Price">
           <Form.Control
             type="number"
+            min="0"
             className={
               Boolean(errors && errors.price?.type === "required")
                 ? "border border-danger"
