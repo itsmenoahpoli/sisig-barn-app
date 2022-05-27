@@ -53,27 +53,87 @@ const KioskPage = () => {
     }
   };
 
+  const [foodCart, setFoodCart] = React.useState([]);
+
+  React.useEffect(() => {
+    getTotalAmount();
+    console.log(foodCart);
+  }, [foodCart]);
+
+  const getTotalAmount = () => {
+    let totalAmount = foodCart.reduce(function (acc, obj) {
+      return parseInt(acc) + parseInt(obj.totalCost);
+    }, 0);
+
+    console.log(totalAmount);
+
+    return totalAmount;
+  };
+
   const handleAddToCart = (item) => {
-    if (cart.length === 0) {
-      setCart([...cart, { ...item, quantity: 1 }]);
-    } else {
-      for (let d = 0; d < cart.length; d++) {
-        if (cart[d].name === item.name) {
-          let oldCart = [...cart];
-          oldCart[d].quantity = oldCart[d].quantity + 1;
+    if (foodCart.length === 0) {
+      setFoodCart([
+        ...foodCart,
+        {
+          ...item,
+          price: parseInt(item.price),
+          totalCost: parseInt(item.price),
+          quantity: 1,
+        },
+      ]);
 
-          let oldTotalArr = [...totalArr];
-          oldTotalArr[d] =
-            parseInt(oldCart[d].price) * parseInt(oldCart[d].quantity);
+      return;
+    }
 
-          setTotalArr(oldTotalArr);
-          setCart(oldCart);
-        } else {
-          setCart([...cart, { ...item, quantity: 1 }]);
-          setTotalArr([...totalArr, item.price]);
-        }
+    for (let i = 0; i < foodCart.length; i++) {
+      if (foodCart[i].name === item.name) {
+        let oldCart = [...foodCart];
+
+        oldCart[i].quantity = oldCart[i].quantity + 1;
+        oldCart[i].totalCost =
+          parseInt(oldCart[i].price) * parseInt(oldCart[i].quantity);
+
+        // let totalAmount = ;
+
+        setFoodCart(oldCart);
+      } else {
+        setFoodCart([
+          ...foodCart,
+          {
+            ...item,
+            price: parseInt(item.price),
+            totalCost: parseInt(item.price),
+            quantity: 1,
+          },
+        ]);
+        // setTotalAmount(
+        //   (prevState) => parseInt(prevState) + parseInt(item.price)
+        // );
       }
     }
+
+    // if (cart.length === 0) {
+    //   setCart([...cart, { ...item, quantity: 1 }]);
+    //   setTotalArr([item.price]);
+    // } else {
+    //   for (let d = 0; d < cart.length; d++) {
+    //     if (cart[d].name === item.name) {
+    //       let oldCart = [...cart];
+    //       oldCart[d].quantity = oldCart[d].quantity + 1;
+    //       let oldTotalArr = [...totalArr];
+    //       oldTotalArr[d] = parseInt(
+    //         parseInt(oldCart[d].price) * parseInt(oldCart[d].quantity)
+    //       );
+    //       setTotalArr(oldTotalArr);
+    //       setCart(oldCart);
+    //       computeTotalAmount();
+    //     } else {
+    //       setCart([...cart, { ...item, quantity: 1 }]);
+    //       // setTotalArr([parseInt(...totalArr) + parseInt(item.price)]);
+    //       computeTotalAmount();
+    //     }
+    //   }
+    // }
   };
 
   const renderProductItems = (items) => {
@@ -86,7 +146,11 @@ const KioskPage = () => {
     }
 
     return items.map((item) => (
-      <Col md={4} className="product-item text-center" key={item.name}>
+      <Col
+        md={4}
+        className="product-item text-center"
+        key={`${item.id}${item.name}`}
+      >
         <div className="product-item-content">
           <div className="mb-3">
             <Image
@@ -118,13 +182,15 @@ const KioskPage = () => {
     if (method === "-") {
       oldCart[idx].quantity = oldCart[idx].quantity - 1;
       setCart(oldCart);
-
+      computeTotalAmount();
       return;
     }
 
     if (method === "+") {
       oldCart[idx].quantity = oldCart[idx].quantity + 1;
       setCart(oldCart);
+      console.log(totalArr);
+      computeTotalAmount();
 
       return;
     }
@@ -192,7 +258,7 @@ const KioskPage = () => {
           <div className="btn-group">
             <button
               onClick={() => handleUpdateCartItemQty(idx, "-")}
-              disabled={Boolean(cart[idx].quantity === 1)}
+              disabled={Boolean(foodCart[idx].quantity === 1)}
             >
               -
             </button>
@@ -209,14 +275,8 @@ const KioskPage = () => {
       return;
     }
 
-    console.log(totalArr.reduce((pSum, a) => parseInt(pSum) + parseInt(a)));
-
     setTotalAmount(totalArr.reduce((pSum, a) => parseInt(pSum) + parseInt(a)));
   };
-
-  React.useEffect(() => {
-    computeTotalAmount();
-  }, [cart]);
 
   React.useEffect(() => {
     getProductsByCategory("Meals");
@@ -301,7 +361,7 @@ const KioskPage = () => {
                       </tr>
                     </thead>
 
-                    <tbody>{renderCartItems(cart)}</tbody>
+                    <tbody>{renderCartItems(foodCart)}</tbody>
                   </Table>
                 </div>
 
@@ -309,16 +369,12 @@ const KioskPage = () => {
                   <Button
                     className="mt-4"
                     onClick={handleCheckout}
-                    disabled={Boolean(!cart.length)}
+                    disabled={Boolean(!foodCart.length)}
                   >
                     CHECKOUT
                   </Button>
 
-                  <p className="mb-0">
-                    TOTAL: ₱{" "}
-                    {cart.length &&
-                      parseInt(cart[0].price) + parseInt(totalAmount)}
-                  </p>
+                  <p className="mb-0">TOTAL: ₱ {getTotalAmount()}</p>
                 </div>
               </Card.Body>
             </Card>
