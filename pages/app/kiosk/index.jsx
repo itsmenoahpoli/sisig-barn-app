@@ -60,8 +60,6 @@ const KioskPage = () => {
       return parseInt(acc) + parseInt(obj.totalCost);
     }, 0);
 
-    console.log(totalAmount);
-
     return totalAmount;
   };
 
@@ -89,8 +87,6 @@ const KioskPage = () => {
         oldCart[i].quantity = oldCart[i].quantity + 1;
         oldCart[i].totalCost =
           parseInt(oldCart[i].price) * parseInt(oldCart[i].quantity);
-
-        // let totalAmount = ;
 
         setFoodCart(oldCart);
 
@@ -190,7 +186,7 @@ const KioskPage = () => {
       .post(`${axiosBaseURL}/orders`, {
         table: 1,
         order_cart: cart,
-        total_amount: 0,
+        total_amount: getTotalAmount(),
         payment_method: "CASH",
       })
       .then((response) => {
