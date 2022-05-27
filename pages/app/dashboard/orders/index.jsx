@@ -194,31 +194,38 @@ const OrdersPage = () => {
                 <div className="mb-2">
                   <p className="fw-bold mb-0">Order Items</p>
                   <small>{formatOrderItems(orderModal.data?.order_cart)}</small>
+                  {console.log(orderModal.data)}
                 </div>
               </Col>
             </Row>
           </div>
 
-          <ReactToPrint
-            trigger={() => (
-              <Button variant="primary" className="mb-2">
-                Print Receipt
+          <Container>
+            <ReactToPrint
+              trigger={() => (
+                <Button variant="primary" className="mb-2">
+                  Print Receipt
+                </Button>
+              )}
+              content={() => receiptRef.current}
+            />
+          </Container>
+
+          <br />
+
+          <Container>
+            {Boolean(orderModal.data?.status === "SERVED") && (
+              <Alert variant="success">
+                <small>ORDER SERVED</small>
+              </Alert>
+            )}
+
+            {Boolean(orderModal.data?.status === "PENDING") && (
+              <Button onClick={() => handleMarkOrderAsServed()}>
+                MARK AS SERVED
               </Button>
             )}
-            content={() => receiptRef.current}
-          />
-
-          {Boolean(orderModal.data?.status === "SERVED") && (
-            <Alert variant="success">
-              <small>ORDER SERVED</small>
-            </Alert>
-          )}
-
-          {Boolean(orderModal.data?.status === "PENDING") && (
-            <Button onClick={() => handleMarkOrderAsServed()}>
-              MARK AS SERVED
-            </Button>
-          )}
+          </Container>
         </Modal.Body>
       </Modal>
     </DashboardLayout>

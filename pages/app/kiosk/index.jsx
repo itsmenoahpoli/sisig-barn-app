@@ -185,7 +185,7 @@ const KioskPage = () => {
     await axios
       .post(`${axiosBaseURL}/orders`, {
         table: 1,
-        order_cart: cart,
+        order_cart: foodCart,
         total_amount: getTotalAmount(),
         payment_method: "CASH",
       })
@@ -197,9 +197,7 @@ const KioskPage = () => {
           confirmButtonText: "Okay",
         });
 
-        setCart([]);
-        setTotalArr([]);
-        setTotalAmount(0);
+        setFoodCart([]);
       })
       .catch((err) => {
         console.log(err);
