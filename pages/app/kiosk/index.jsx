@@ -55,11 +55,6 @@ const KioskPage = () => {
 
   const [foodCart, setFoodCart] = React.useState([]);
 
-  React.useEffect(() => {
-    getTotalAmount();
-    console.log(foodCart);
-  }, [foodCart]);
-
   const getTotalAmount = () => {
     let totalAmount = foodCart.reduce(function (acc, obj) {
       return parseInt(acc) + parseInt(obj.totalCost);
@@ -82,6 +77,8 @@ const KioskPage = () => {
         },
       ]);
 
+      getTotalAmount();
+
       return;
     }
 
@@ -96,6 +93,8 @@ const KioskPage = () => {
         // let totalAmount = ;
 
         setFoodCart(oldCart);
+
+        getTotalAmount();
       } else {
         setFoodCart([
           ...foodCart,
@@ -106,34 +105,10 @@ const KioskPage = () => {
             quantity: 1,
           },
         ]);
-        // setTotalAmount(
-        //   (prevState) => parseInt(prevState) + parseInt(item.price)
-        // );
+
+        getTotalAmount();
       }
     }
-
-    // if (cart.length === 0) {
-    //   setCart([...cart, { ...item, quantity: 1 }]);
-    //   setTotalArr([item.price]);
-    // } else {
-    //   for (let d = 0; d < cart.length; d++) {
-    //     if (cart[d].name === item.name) {
-    //       let oldCart = [...cart];
-    //       oldCart[d].quantity = oldCart[d].quantity + 1;
-    //       let oldTotalArr = [...totalArr];
-    //       oldTotalArr[d] = parseInt(
-    //         parseInt(oldCart[d].price) * parseInt(oldCart[d].quantity)
-    //       );
-    //       setTotalArr(oldTotalArr);
-    //       setCart(oldCart);
-    //       computeTotalAmount();
-    //     } else {
-    //       setCart([...cart, { ...item, quantity: 1 }]);
-    //       // setTotalArr([parseInt(...totalArr) + parseInt(item.price)]);
-    //       computeTotalAmount();
-    //     }
-    //   }
-    // }
   };
 
   const renderProductItems = (items) => {
@@ -177,20 +152,21 @@ const KioskPage = () => {
   };
 
   const handleUpdateCartItemQty = (idx, method) => {
-    let oldCart = [...cart];
+    let oldCart = [...foodCart];
 
     if (method === "-") {
       oldCart[idx].quantity = oldCart[idx].quantity - 1;
-      setCart(oldCart);
-      computeTotalAmount();
+      oldCart[idx].totalCost =
+        parseInt(oldCart[idx].quantity) * parseInt(oldCart[idx].price);
+      setFoodCart(oldCart);
       return;
     }
 
     if (method === "+") {
       oldCart[idx].quantity = oldCart[idx].quantity + 1;
-      setCart(oldCart);
-      console.log(totalArr);
-      computeTotalAmount();
+      oldCart[idx].totalCost =
+        parseInt(oldCart[idx].quantity) * parseInt(oldCart[idx].price);
+      setFoodCart(oldCart);
 
       return;
     }
