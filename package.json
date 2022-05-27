@@ -32,6 +32,7 @@
     "react-select": "^5.2.2",
     "react-time-ago": "^7.1.9",
     "react-to-pdf": "0.0.14",
+    "react-to-print": "^2.14.7",
     "react-user-avatar": "^1.10.0",
     "styled-components": "^5.3.5",
     "sweetalert2": "^11.4.8",

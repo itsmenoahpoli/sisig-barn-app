@@ -56,7 +56,6 @@ const KioskPage = () => {
   const handleAddToCart = (item) => {
     if (cart.length === 0) {
       setCart([...cart, { ...item, quantity: 1 }]);
-      computeTotalAmount();
     } else {
       for (let d = 0; d < cart.length; d++) {
         if (cart[d].name === item.name) {
@@ -74,7 +73,6 @@ const KioskPage = () => {
           setTotalArr([...totalArr, item.price]);
         }
       }
-      computeTotalAmount();
     }
   };
 
@@ -121,6 +119,7 @@ const KioskPage = () => {
       oldCart[idx].quantity = oldCart[idx].quantity - 1;
       setCart(oldCart);
 
+      computeTotalAmount();
       return;
     }
 
@@ -128,6 +127,7 @@ const KioskPage = () => {
       oldCart[idx].quantity = oldCart[idx].quantity + 1;
       setCart(oldCart);
 
+      computeTotalAmount();
       return;
     }
   };
@@ -138,7 +138,7 @@ const KioskPage = () => {
     oldCart.splice(idx, 1);
 
     setCart(oldCart);
-    computeTotalAmount();
+    // computeTotalAmount();
   };
 
   const handleCheckout = async () => {
@@ -150,7 +150,7 @@ const KioskPage = () => {
       .post(`${axiosBaseURL}/orders`, {
         table: 1,
         order_cart: cart,
-        total_amount: parseInt(cart[0].price) + parseInt(totalAmount),
+        total_amount: 0,
         payment_method: "CASH",
       })
       .then((response) => {
@@ -169,8 +169,6 @@ const KioskPage = () => {
         console.log(err);
       });
   };
-
-  React.useState(() => {}, [totalArr]);
 
   const renderCartItems = (items) => {
     if (!items.length) {
@@ -209,12 +207,20 @@ const KioskPage = () => {
   };
 
   const computeTotalAmount = () => {
-    if (!totalArr.length) {
+    if (totalArr.length === 0) {
+      console.log("not compute()");
       return;
     }
 
+    console.log("compute()");
+    console.log(totalArr.reduce((pSum, a) => parseInt(pSum) + parseInt(a)));
+
     setTotalAmount(totalArr.reduce((pSum, a) => parseInt(pSum) + parseInt(a)));
   };
+
+  React.useEffect(() => {
+    computeTotalAmount();
+  }, [cart]);
 
   React.useEffect(() => {
     getProductsByCategory("Meals");
