@@ -147,7 +147,7 @@ const KioskPage = () => {
 
     const axiosBaseURL = prodURL;
     await axios
-      .post(`${axiosBaseURL}/orders/`, {
+      .post(`${axiosBaseURL}/orders`, {
         table: 1,
         order_cart: cart,
         total_amount: parseInt(cart[0].price) + parseInt(totalAmount),
