@@ -12,6 +12,7 @@ import {
 import TimeAgo from "javascript-time-ago";
 import ReactTimeAgo from "react-time-ago";
 import en from "javascript-time-ago/locale/en.json";
+import ReactToPrint from "react-to-print";
 
 import { DashboardLayout } from "components/layouts";
 import { TableBuilder } from "components/tables";
@@ -28,6 +29,8 @@ const OrdersPage = () => {
     show: false,
     data: null,
   });
+
+  const receiptRef = React.useRef(null);
 
   const getOrders = async (search) => {
     setLoading(true);
@@ -158,38 +161,52 @@ const OrdersPage = () => {
         </Modal.Header>
 
         <Modal.Body>
-          <Row>
-            <Col>
-              <div className="mb-2">
-                <p className="fw-bold mb-0">Total Amount</p>
-                <small>₱ {orderModal.data?.total_amount}</small>
-              </div>
+          <div
+            ref={receiptRef}
+            style={{ width: "70%", padding: "40px", margin: "0 auto" }}
+          >
+            <Row>
+              <Col>
+                <div className="mb-2">
+                  <p className="fw-bold mb-0">Total Amount</p>
+                  <small>₱ {orderModal.data?.total_amount}</small>
+                </div>
 
-              <div className="mb-2">
-                <p className="fw-bold mb-0">Payment Method</p>
-                <small>{orderModal.data?.payment_method}</small>
-              </div>
+                <div className="mb-2">
+                  <p className="fw-bold mb-0">Payment Method</p>
+                  <small>{orderModal.data?.payment_method}</small>
+                </div>
 
-              <div className="mb-2">
-                <p className="fw-bold mb-0">Status</p>
-                <small>{orderModal.data?.status}</small>
-              </div>
-            </Col>
+                <div className="mb-2">
+                  <p className="fw-bold mb-0">Status</p>
+                  <small>{orderModal.data?.status}</small>
+                </div>
+              </Col>
 
-            <Col>
-              <div className="mb-2">
-                <p className="fw-bold mb-0">Voided</p>
-                <small>
-                  {orderModal.data?.is_voided ? "VOIDED" : "NOT VOIDED"}
-                </small>
-              </div>
+              <Col>
+                <div className="mb-2">
+                  <p className="fw-bold mb-0">Voided</p>
+                  <small>
+                    {orderModal.data?.is_voided ? "VOIDED" : "NOT VOIDED"}
+                  </small>
+                </div>
 
-              <div className="mb-2">
-                <p className="fw-bold mb-0">Order Items</p>
-                <small>{formatOrderItems(orderModal.data?.order_cart)}</small>
-              </div>
-            </Col>
-          </Row>
+                <div className="mb-2">
+                  <p className="fw-bold mb-0">Order Items</p>
+                  <small>{formatOrderItems(orderModal.data?.order_cart)}</small>
+                </div>
+              </Col>
+            </Row>
+          </div>
+
+          <ReactToPrint
+            trigger={() => (
+              <Button variant="primary" className="mb-2">
+                Print Receipt
+              </Button>
+            )}
+            content={() => receiptRef.current}
+          />
 
           {Boolean(orderModal.data?.status === "SERVED") && (
             <Alert variant="success">

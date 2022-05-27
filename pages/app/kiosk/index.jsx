@@ -119,7 +119,6 @@ const KioskPage = () => {
       oldCart[idx].quantity = oldCart[idx].quantity - 1;
       setCart(oldCart);
 
-      computeTotalAmount();
       return;
     }
 
@@ -127,7 +126,6 @@ const KioskPage = () => {
       oldCart[idx].quantity = oldCart[idx].quantity + 1;
       setCart(oldCart);
 
-      computeTotalAmount();
       return;
     }
   };
@@ -138,7 +136,7 @@ const KioskPage = () => {
     oldCart.splice(idx, 1);
 
     setCart(oldCart);
-    // computeTotalAmount();
+    computeTotalAmount();
   };
 
   const handleCheckout = async () => {
@@ -208,11 +206,9 @@ const KioskPage = () => {
 
   const computeTotalAmount = () => {
     if (totalArr.length === 0) {
-      console.log("not compute()");
       return;
     }
 
-    console.log("compute()");
     console.log(totalArr.reduce((pSum, a) => parseInt(pSum) + parseInt(a)));
 
     setTotalAmount(totalArr.reduce((pSum, a) => parseInt(pSum) + parseInt(a)));
