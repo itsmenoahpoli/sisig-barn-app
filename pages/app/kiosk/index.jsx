@@ -24,9 +24,12 @@ const KioskPage = () => {
   const [totalAmount, setTotalAmount] = React.useState(0);
 
   const getProductsByCategory = async (category) => {
-    let { data } = await axios.get(
-      "http://localhost:8000/api/v1/products/" + category
-    );
+    const devURL = "http://localhost:8000/api/v1";
+    const prodURL = "https://sisig-barn-app.pwnp-ws.com/public/api/v1";
+
+    const axiosBaseURL = prodURL;
+
+    let { data } = await axios.get(`${axiosBaseURL}/products/` + category);
 
     switch (category) {
       case "Meals":
