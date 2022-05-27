@@ -24,8 +24,13 @@ const LandingPage = () => {
   } = useForm();
 
   const handleFormSubmit = async (formData) => {
+    const devURL = "http://localhost:8000/api/v1";
+    const prodURL = "https://sisig-barn-app.pwnp-ws.com/public/api/v1";
+
+    const axiosBaseURL = prodURL;
+
     await axios
-      .post("http://localhost:8000/api/v1/auth/login", formData)
+      .post(`${axiosBaseURL}/auth/login`, formData)
       .then((response) => {
         localStorage.setItem("user", response.data.user);
         localStorage.setItem("accessToken", response.data.accessToken);
