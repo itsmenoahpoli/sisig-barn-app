@@ -169,12 +169,12 @@ const KioskPage = () => {
   };
 
   const handleRemoveItemFromCart = (idx) => {
-    let oldCart = [...cart];
+    let oldCart = [...foodCart];
 
     oldCart.splice(idx, 1);
 
-    setCart(oldCart);
-    computeTotalAmount();
+    setFoodCart(oldCart);
+    getTotalAmount();
   };
 
   const handleCheckout = async () => {
