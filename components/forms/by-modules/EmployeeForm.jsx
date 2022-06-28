@@ -36,6 +36,7 @@ export const EmployeeForm = (props) => {
             }
             {...register("name", { required: true })}
             defaultValue={values?.name}
+            readOnly={values?.name !== '' || values?.name !== null ? true : false}
             placeholder="Name"
           />
         </FloatingLabel>

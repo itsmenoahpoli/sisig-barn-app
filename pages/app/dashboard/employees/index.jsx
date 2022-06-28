@@ -109,13 +109,13 @@ const EmployeesPage = () => {
             >
               Edit
             </Button>
-            <Button
+            {/* <Button
               variant="link"
               className="mx-1"
               onClick={() => handleDeleteProduct(row.id)}
             >
               Delete
-            </Button>
+            </Button> */}
           </>
         ),
       },

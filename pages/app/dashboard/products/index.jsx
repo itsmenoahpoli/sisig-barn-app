@@ -1,6 +1,5 @@
 import React from "react";
-import { Container, Button, Form, Card, Modal } from "react-bootstrap";
-import { useForm } from "react-hook-form";
+import { Container, Button, Form, Card, Modal, Image } from "react-bootstrap";
 
 import { DashboardLayout } from "components/layouts";
 import { TableBuilder } from "components/tables";
@@ -63,6 +62,14 @@ const ProductsPage = () => {
   const tableColumns = React.useMemo(
     () => [
       {
+        name: <p>&mdash;</p>,
+        selector: (row) => row.image_url,
+        sortable: true,
+        cell: row => <Container fluid className="fluid">
+          <Image src={row.image_url} alt={row.image_url} fluid style={{height: '100px', width: '100px', borderRadius: '10px'}} />
+        </Container>
+      },
+      {
         name: "Product",
         selector: (row) => row.name,
         sortable: true,
@@ -109,6 +116,8 @@ const ProductsPage = () => {
     ],
     []
   );
+
+  
 
   React.useEffect(() => {
     getProducts(search);

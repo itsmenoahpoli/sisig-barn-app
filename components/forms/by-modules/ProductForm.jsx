@@ -4,13 +4,16 @@ import {
   Form,
   FloatingLabel,
   Row,
-  Col
+  Col,
+  Image
 } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 
 export const ProductForm = (props) => {
   const { formFns, values } = props;
-  const [image, setImage] = React.useState(null)
+  const uploadInputRef = React.useRef(null)
+  const [imagePreview, setImagePreview] = React.useState("")
+  const [image, setImage] = React.useState(null);
 
   const {
     handleSubmit,
@@ -19,8 +22,23 @@ export const ProductForm = (props) => {
   } = useForm();
 
   const handleFormSubmit = async (formValues) => {
-    await formFns.formSubmitFn(formValues);
+    await formFns.formSubmitFn({ ...formValues, image });
   };
+
+  const handleImagePreview = image => {
+    if (image) {
+      const previewURL = URL.createObjectURL(image);
+      setImagePreview(previewURL);
+      setImage(image)
+    }
+  }
+
+  const handleResetImage = () => {
+    setImagePreview("")
+    setImage(null)
+
+    uploadInputRef.current.value = ""
+  }
 
   return (
     <Form onSubmit={handleSubmit(handleFormSubmit)}>
@@ -28,16 +46,19 @@ export const ProductForm = (props) => {
         <Row>
           <Col md={5}>
             <Form.Label>Image</Form.Label>
-            <Form.Control
-            type="file"
-            placeholder="Menu Item Image"
-            onChange={e => setImage(e.target.files[0])}
-          />
+              <Form.Control
+              type="file"
+              placeholder="Menu Item Image"
+              ref={uploadInputRef}
+              onChange={e => handleImagePreview(e.target.files[0])}
+            />
+            {Boolean(image !== null) && <Button onClick={handleResetImage} variant="link" size="sm">Remove image</Button>}  
           </Col>
 
           <Col md={7}>
             <div className="col-md-10 mx-auto" style={{height: '300px', padding: '10px', borderRadius: '10px', border: 'solid 1px #eee', backgroundColor: '#f1f1f1'}}>
-              <img src="" alt="" className="img-fluid" />
+              {Boolean(image !== null) && <Image src={imagePreview} alt="" style={{height: '100%', width: '100%'}} fluid />}
+              {Boolean(values?.image_url) && <Image src={values?.image_url} alt="" style={{height: '100%', width: '100%'}} fluid /> }
             </div>
           </Col>
         </Row>
