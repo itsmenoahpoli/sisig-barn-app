@@ -1,17 +1,16 @@
 import React from "react";
 import {
-  Container,
   Button,
-  ButtonGroup,
   Form,
   FloatingLabel,
-  Card,
-  Modal,
+  Row,
+  Col
 } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 
 export const ProductForm = (props) => {
   const { formFns, values } = props;
+  const [image, setImage] = React.useState(null)
 
   const {
     handleSubmit,
@@ -25,6 +24,24 @@ export const ProductForm = (props) => {
 
   return (
     <Form onSubmit={handleSubmit(handleFormSubmit)}>
+      <Form.Group className="form-group">
+        <Row>
+          <Col md={5}>
+            <Form.Label>Image</Form.Label>
+            <Form.Control
+            type="file"
+            placeholder="Menu Item Image"
+            onChange={e => setImage(e.target.files[0])}
+          />
+          </Col>
+
+          <Col md={7}>
+            <div className="col-md-10 mx-auto" style={{height: '300px', padding: '10px', borderRadius: '10px', border: 'solid 1px #eee', backgroundColor: '#f1f1f1'}}>
+              <img src="" alt="" className="img-fluid" />
+            </div>
+          </Col>
+        </Row>
+      </Form.Group>
       <Form.Group className="form-group">
         <FloatingLabel label="Category">
           <Form.Select
