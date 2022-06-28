@@ -26,6 +26,25 @@ export const EmployeeForm = (props) => {
   return (
     <Form onSubmit={handleSubmit(handleFormSubmit)}>
       <Form.Group className="form-group">
+        <FloatingLabel label="Employee Status">
+        <Form.Select
+            className={
+              Boolean(errors && errors.status?.type === "required")
+                ? "border border-danger"
+                : ""
+            }
+            {...register("status", { required: true })}
+            defaultValue={values?.status}
+            placeholder="Status"
+          >
+            <option value="">Choose</option>
+            <option value="Male">Enabled &#10004;</option>
+            <option value="Female">Disabled &#10005;</option>
+          </Form.Select>
+        </FloatingLabel>
+      </Form.Group>
+
+      <Form.Group className="form-group">
         <FloatingLabel label="Name">
           <Form.Control
             type="text"
@@ -36,7 +55,7 @@ export const EmployeeForm = (props) => {
             }
             {...register("name", { required: true })}
             defaultValue={values?.name}
-            readOnly={values?.name !== '' || values?.name !== null ? true : false}
+            // readOnly={values?.name !== '' || values?.name !== null ? true : false}
             placeholder="Name"
           />
         </FloatingLabel>
@@ -45,7 +64,7 @@ export const EmployeeForm = (props) => {
       <Form.Group className="form-group">
         <FloatingLabel label="Email">
           <Form.Control
-            type="text"
+            type="email"
             className={
               Boolean(errors && errors.email?.type === "required")
                 ? "border border-danger"
@@ -61,7 +80,7 @@ export const EmployeeForm = (props) => {
       <Form.Group className="form-group">
         <FloatingLabel label="Contacts">
           <Form.Control
-            type="text"
+            type="number"
             className={
               Boolean(errors && errors.contacts?.type === "required")
                 ? "border border-danger"
@@ -93,7 +112,6 @@ export const EmployeeForm = (props) => {
       <Form.Group className="form-group">
         <FloatingLabel label="Gender">
           <Form.Select
-            type="date"
             className={
               Boolean(errors && errors.gender?.type === "required")
                 ? "border border-danger"

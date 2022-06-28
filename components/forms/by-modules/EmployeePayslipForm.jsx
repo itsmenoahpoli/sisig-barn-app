@@ -1,13 +1,11 @@
 import React from "react";
 import {
-  Container,
   Button,
   Form,
   FloatingLabel,
-  Card,
-  Modal,
 } from "react-bootstrap";
 import { useForm } from "react-hook-form";
+import moment from 'moment'
 
 export const EmployeePayslipForm = (props) => {
   const { formFns, values, employees } = props;
@@ -21,8 +19,6 @@ export const EmployeePayslipForm = (props) => {
   const handleFormSubmit = async (formValues) => {
     await formFns.formSubmitFn(formValues);
   };
-
-  console.log(employees);
 
   return (
     <Form onSubmit={handleSubmit(handleFormSubmit)}>
@@ -53,15 +49,15 @@ export const EmployeePayslipForm = (props) => {
       <Form.Group className="form-group">
         <FloatingLabel label="Payroll/Payslip for Date">
           <Form.Control
-            type="date"
+            type="text"
             className={
               Boolean(errors && errors.payslip_for_date?.type === "required")
                 ? "border border-danger"
                 : ""
             }
             {...register("payslip_for_date", { required: true })}
-            defaultValue={values?.payslip_for_date}
-            readOnly={Boolean(values)}
+            value={moment().format('MMMM - YYYY')}
+            readOnly
             placeholder="Payroll/Payslip for Date"
           />
         </FloatingLabel>

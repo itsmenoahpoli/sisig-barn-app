@@ -1,6 +1,5 @@
 import React from "react";
 import { Container, Button, Form, Card, Modal } from "react-bootstrap";
-import moment from "moment";
 
 import { DashboardLayout } from "components/layouts";
 import { TableBuilder } from "components/tables";
@@ -56,15 +55,6 @@ const EmployeePayslipsPage = () => {
     handleEmployeePayslipModal(true, data);
   };
 
-  const handleDeleteProduct = async (employeePayslipId) => {
-    if (confirm("Do you confirm to delete this employee record?")) {
-      await employeePayslipsService.deleteEmployeePayslipById(
-        employeePayslipId
-      );
-      await getEmployeePayslips("");
-    }
-  };
-
   const handleSearch = (search) => {
     setSearch(search);
   };
@@ -103,12 +93,9 @@ const EmployeePayslipsPage = () => {
         sortable: true,
       },
       {
-        name: "Payroll Date",
+        name: "Payroll Month",
         selector: (row) => row.payroll_for_date,
-        sortable: true,
-        cell: (row) => {
-          return moment(row.payroll_for_date).format("MMM D, YYYY");
-        },
+        sortable: true
       },
       {
         name: "Actions",

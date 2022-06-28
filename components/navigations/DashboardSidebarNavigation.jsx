@@ -1,12 +1,11 @@
 import React from "react";
-import { Container, Image, Button, Badge } from "react-bootstrap";
+import { Container, Image, Button } from "react-bootstrap";
 import {
-  FiHome,
   FiShoppingBag,
   FiShoppingCart,
-  FiFileText,
   FiUsers,
   FiArchive,
+  FiExternalLink
 } from "react-icons/fi";
 import moment from "moment";
 
@@ -40,6 +39,11 @@ const sidebarLinks = [
     name: "Employee Payslips",
     url: "/app/dashboard/employee-payslips/",
     icon: <FiArchive />,
+  },
+  {
+    name: "Open KIOSK App",
+    url: "/app/kiosk/",
+    icon: <FiExternalLink />,
   },
 ];
 

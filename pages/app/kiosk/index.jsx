@@ -24,10 +24,10 @@ const KioskPage = () => {
   const [totalAmount, setTotalAmount] = React.useState(0);
 
   const getProductsByCategory = async (category) => {
-    // const devURL = "http://localhost:8000/api/v1";
+    const devURL = "http://localhost:8000/api/v1";
     const prodURL = "https://sisig-barn-app.pwnp-ws.com/public/api/v1";
 
-    const axiosBaseURL = prodURL;
+    const axiosBaseURL = devURL;
 
     let { data } = await axios.get(`${axiosBaseURL}/products/` + category);
 
