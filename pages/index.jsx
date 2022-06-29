@@ -27,7 +27,7 @@ const LandingPage = () => {
     const devURL = "http://localhost:8000/api/v1";
     const prodURL = "https://sisig-barn-app.pwnp-ws.com/public/api/v1";
 
-    const axiosBaseURL = prodURL;
+    const axiosBaseURL = devURL;
 
     await axios
       .post(`${axiosBaseURL}/auth/login`, formData)
@@ -70,8 +70,8 @@ const LandingPage = () => {
             <div className="text-center">
               <Image
                 fluid
-                src="/assets/images/sisig-barn-logo.png"
-                alt="Brgy.pitogo logo"
+                src="/assets/images/brand-logo.jpg"
+                alt="carmens bulalo"
                 height={130}
                 width={130}
               />

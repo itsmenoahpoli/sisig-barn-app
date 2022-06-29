@@ -76,7 +76,7 @@ const ProductsPage = () => {
       },
       {
         name: "Category",
-        selector: (row) => row.category,
+        selector: (row) => row.product_category.name,
         sortable: true,
       },
       {

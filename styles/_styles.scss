@@ -213,7 +213,7 @@ form {
   .dashboard-sidebar {
     width: $sidebarWidth;
     color: #fff !important;
-    background: #ffa652;
+    background: green;
     padding: 10px !important;
     position: sticky;
     top: 0;
@@ -340,11 +340,11 @@ form {
 
 .auth-container {
   height: 100vh;
-  background: #ffa652 !important;
+  background: green !important;
 }
 
 .kiosk-layout {
-  background: #ffa652 !important;
+  background: green !important;
   height: 100% !important;
   position: relative;
 

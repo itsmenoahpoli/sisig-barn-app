@@ -67,7 +67,7 @@ export const DashboardSidebarNavigation = (props) => {
         <div className="d-flex justify-content-center align-items-center">
           <Image
             fluid
-            src="/assets/images/sisig-barn-logo.png"
+            src="/assets/images/brand-logo.jpg"
             alt="Brgy.pitogo logo"
             height={130}
             width={130}
@@ -75,7 +75,7 @@ export const DashboardSidebarNavigation = (props) => {
           &nbsp; &nbsp;
         </div>
 
-        <p className="fw-bold mt-3">SISIG BARN CRISPY SISIG</p>
+        <p className="fw-bold mt-3">CARMEN'S BULALO & INIHAW</p>
 
         <Container fluid className="text-content mt-3">
           {/* <p className="mb-0">
@@ -88,7 +88,7 @@ export const DashboardSidebarNavigation = (props) => {
       <hr />
 
       <Container fluid className="body">
-        <p className="title">&mdash; Manage</p>
+        <p className="title text-white">&mdash; Manage</p>
 
         {sidebarLinks.map((_) => (
           <Button
