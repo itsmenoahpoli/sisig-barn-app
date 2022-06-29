@@ -1,6 +1,5 @@
 import React from "react";
-import { Container, Button, Form, Card, Modal } from "react-bootstrap";
-import { useForm } from "react-hook-form";
+import { Container, Button, Form, Card, Modal, Badge } from "react-bootstrap";
 
 import { DashboardLayout } from "components/layouts";
 import { TableBuilder } from "components/tables";
@@ -73,6 +72,14 @@ const EmployeesPage = () => {
         name: "Employee No.",
         selector: (row) => row.emp_no,
         sortable: true,
+      },
+      {
+        name: "Status",
+        selector: (row) => row.is_enabled,
+        sortable: true,
+        cell: row => {
+          return row.status ? <Badge bg="success">Enabled</Badge> : <Badge bg="danger">Disabled</Badge>
+        }
       },
       {
         name: "Name",

@@ -1,12 +1,8 @@
 import React from "react";
 import {
-  Container,
   Button,
-  ButtonGroup,
   Form,
   FloatingLabel,
-  Card,
-  Modal,
 } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 
@@ -38,8 +34,8 @@ export const EmployeeForm = (props) => {
             placeholder="Status"
           >
             <option value="">Choose</option>
-            <option value="Male">Enabled &#10004;</option>
-            <option value="Female">Disabled &#10005;</option>
+            <option value={1}>Enabled &#10004;</option>
+            <option value={0}>Disabled &#10005;</option>
           </Form.Select>
         </FloatingLabel>
       </Form.Group>
