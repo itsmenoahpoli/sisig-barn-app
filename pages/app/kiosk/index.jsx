@@ -179,7 +179,7 @@ const KioskPage = () => {
 
   const handleCheckout = async () => {
     // const devURL = "http://localhost:8000/api/v1";
-    const prodURL = "https://sisig-barn-app.pwnp-ws.com/public/api/v1";
+    const prodURL  = "https://sisig-barn-app.pwnp-ws.com/public/api/v1";
 
     const axiosBaseURL = prodURL;
     await axios
@@ -249,10 +249,10 @@ const KioskPage = () => {
   };
 
   React.useEffect(() => {
-    getProductsByCategory("Meals");
-    getProductsByCategory("Ala Carte");
-    getProductsByCategory("Add-Ons");
-    getProductsByCategory("Drinks");
+    // getProductsByCategory("Meals");
+    // getProductsByCategory("Ala Carte");
+    // getProductsByCategory("Add-Ons");
+    // getProductsByCategory("Drinks");
   }, []);
 
   return (
