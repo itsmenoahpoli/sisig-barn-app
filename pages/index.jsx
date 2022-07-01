@@ -27,7 +27,7 @@ const LandingPage = () => {
     const devURL = "http://localhost:8000/api/v1";
     const prodURL = "https://sisig-barn-app.pwnp-ws.com/public/api/v1";
 
-    const axiosBaseURL = devURL;
+    const axiosBaseURL = prodURL;
 
     await axios
       .post(`${axiosBaseURL}/auth/login`, formData)
