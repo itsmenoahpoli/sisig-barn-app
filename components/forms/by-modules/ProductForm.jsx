@@ -14,6 +14,7 @@ export const ProductForm = (props) => {
   const uploadInputRef = React.useRef(null)
   const [imagePreview, setImagePreview] = React.useState("")
   const [image, setImage] = React.useState(null);
+  const [priceErr, setPriceErr] = React.useState(false)
 
   const {
     handleSubmit,
@@ -38,6 +39,15 @@ export const ProductForm = (props) => {
     setImage(null)
 
     uploadInputRef.current.value = ""
+  }
+
+  const validatePrice = price => {
+    if (price === 0 || price < 0) {
+      setPriceErr(true)
+      return;
+    }
+
+    setPriceErr(false)
   }
 
   return (
@@ -68,19 +78,16 @@ export const ProductForm = (props) => {
           <Form.Select
             type="text"
             className={
-              Boolean(errors && errors.category?.type === "required")
+              Boolean(errors && errors.product_category_id?.type === "required")
                 ? "border border-danger"
                 : ""
             }
-            {...register("category", { required: true })}
-            defaultValue={values?.category}
+            {...register("product_category_id", { required: true })}
+            defaultValue={values?.product_category_id}
             placeholder="Category"
           >
             <option value="">Choose</option>
-            <option value="Meals">Meals</option>
-            <option value="Ala Carte">Ala Carte</option>
-            <option value="Drinks">Drinks</option>
-            <option value="Add-ons">Add-ons</option>
+            <option value={1}>Meals</option>
           </Form.Select>
         </FloatingLabel>
       </Form.Group>
@@ -111,10 +118,13 @@ export const ProductForm = (props) => {
                 ? "border border-danger"
                 : ""
             }
-            {...register("price", { required: true })}
+            {...register("price", {  required: true, })}
+            onChange={e => validatePrice(Number(e.target.value))}
             defaultValue={values?.price}
             placeholder="Price"
           />
+
+          {Boolean(priceErr) && <small className="text-danger">Price must be above zero</small>}
         </FloatingLabel>
       </Form.Group>
 
@@ -136,7 +146,7 @@ export const ProductForm = (props) => {
         </FloatingLabel>
       </Form.Group>
 
-      <Button type="submit">SUBMIT PRODUCT DETAILS</Button>
+      <Button type="submit" disabled={priceErr ? true : false}>SUBMIT PRODUCT DETAILS</Button>
     </Form>
   );
 };
