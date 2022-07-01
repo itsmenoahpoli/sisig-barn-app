@@ -75,7 +75,7 @@ export const DashboardSidebarNavigation = (props) => {
           &nbsp; &nbsp;
         </div>
 
-        <p className="fw-bold mt-3">CARMEN'S BULALO & INIHAW</p>
+        <p className="fw-bold mt-3">CARMEN&apos;S BULALO & INIHAW</p>
 
         <Container fluid className="text-content mt-3">
           {/* <p className="mb-0">
