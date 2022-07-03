@@ -1,18 +1,11 @@
-import React from "react";
-import Head from "next/head";
-import { useRouter } from "next/router";
-import {
-  Container,
-  Image,
-  Form,
-  FloatingLabel,
-  Button,
-  Card,
-} from "react-bootstrap";
-import { useForm } from "react-hook-form";
+import React from 'react';
+import Head from 'next/head';
+import { useRouter } from 'next/router';
+import { Container, Image, Form, FloatingLabel, Button, Card } from 'react-bootstrap';
+import { useForm } from 'react-hook-form';
 
-import axios from "axios";
-import Swal from "sweetalert2";
+import axios from 'axios';
+import Swal from 'sweetalert2';
 
 const LandingPage = () => {
   const router = useRouter();
@@ -24,47 +17,41 @@ const LandingPage = () => {
   } = useForm();
 
   const handleFormSubmit = async (formData) => {
-    const devURL = "http://localhost:8000/api/v1";
-    const prodURL = "https://sisig-barn-app.pwnp-ws.com/public/api/v1";
+    const devURL = 'http://localhost:8000/api/v1';
+    const prodURL = 'https://sisig-barn-app.pwnp-ws.com/public/api/v1';
 
-    const axiosBaseURL = prodURL;
+    const axiosBaseURL = devURL;
 
     await axios
       .post(`${axiosBaseURL}/auth/login`, formData)
       .then((response) => {
-        localStorage.setItem("user", response.data.user);
-        localStorage.setItem("accessToken", response.data.accessToken);
+        localStorage.setItem('user', response.data.user);
+        localStorage.setItem('accessToken', response.data.accessToken);
 
-        router.push("/app/dashboard");
+        router.push('/app/dashboard');
       })
       .catch((err) => {
         Swal.fire({
-          icon: "error",
-          title: "Error",
-          text: "Invalid credentials provided",
-          confirmButtonText: "Okay",
+          icon: 'error',
+          title: 'Error',
+          text: 'Invalid credentials provided',
+          confirmButtonText: 'Okay',
         });
       });
   };
 
   React.useEffect(() => {
-    if (
-      localStorage.getItem("user") !== null &&
-      localStorage.getItem("accessToken") !== null
-    ) {
-      router.replace("/app/dashboard");
+    if (localStorage.getItem('user') !== null && localStorage.getItem('accessToken') !== null) {
+      router.replace('/app/dashboard');
     }
   }, []);
 
   return (
     <>
       <Head>
-        <title>SBCS - Log In</title>
+        <title>Kiosk Inventory - Log In</title>
       </Head>
-      <Container
-        fluid
-        className="auth-container d-flex justify-content-center align-items-center"
-      >
+      <Container fluid className="auth-container d-flex justify-content-center align-items-center">
         <Card className="col-md-3 col-sm-8 col-xs-10">
           <Card.Body>
             <div className="text-center">
@@ -78,20 +65,18 @@ const LandingPage = () => {
             </div>
 
             <Form onSubmit={handleSubmit(handleFormSubmit)} className="mt-4">
-              <small className="text-muted">
-                Please enter your credentials below &mdash;
-              </small>
+              <small className="text-muted">Please enter your credentials below &mdash;</small>
 
               <Form.Group className="form-group">
                 <FloatingLabel label="E-mail">
                   <Form.Control
                     type="email"
                     className={
-                      Boolean(errors && errors.email?.type === "required")
-                        ? "border border-danger"
-                        : ""
+                      Boolean(errors && errors.email?.type === 'required')
+                        ? 'border border-danger'
+                        : ''
                     }
-                    {...register("email", { required: true })}
+                    {...register('email', { required: true })}
                     placeholder="E-mail"
                   />
                 </FloatingLabel>
@@ -102,11 +87,11 @@ const LandingPage = () => {
                   <Form.Control
                     type="password"
                     className={
-                      Boolean(errors && errors.password?.type === "required")
-                        ? "border border-danger"
-                        : ""
+                      Boolean(errors && errors.password?.type === 'required')
+                        ? 'border border-danger'
+                        : ''
                     }
-                    {...register("password", { required: true })}
+                    {...register('password', { required: true })}
                     placeholder="Password"
                   />
                 </FloatingLabel>

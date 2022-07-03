@@ -1,20 +1,17 @@
-import React from "react";
-import Head from "next/head";
-import Link from "next/link";
-import { Toaster } from "react-hot-toast";
-import { useRouter } from "next/router";
-import { Container } from "react-bootstrap";
+import React from 'react';
+import Head from 'next/head';
+import Link from 'next/link';
+import { Toaster } from 'react-hot-toast';
+import { useRouter } from 'next/router';
+import { Container } from 'react-bootstrap';
 
-import {
-  DashboardSidebarNavigation,
-  DashboardNavbarNavigation,
-} from "components/navigations";
-import { BreadcrumbBuilder } from "components/general";
+import { DashboardSidebarNavigation, DashboardNavbarNavigation } from 'components/navigations';
+import { BreadcrumbBuilder } from 'components/general';
 
 const toastOptions = {
   style: {
-    fontSize: "12px",
-    color: "#252525",
+    fontSize: '12px',
+    color: '#252525',
   },
 };
 
@@ -31,18 +28,15 @@ export const DashboardLayout = (props) => {
   };
 
   React.useEffect(() => {
-    if (
-      localStorage.getItem("user") === null &&
-      localStorage.getItem("accessToken") === null
-    ) {
-      router.push("/");
+    if (localStorage.getItem('user') === null && localStorage.getItem('accessToken') === null) {
+      router.push('/');
     }
   }, []);
 
   return (
     <>
       <Head>
-        <title>SBCS &mdash; {title || "Dashboard"}</title>
+        <title>Kiosk &mdash; {title || 'Dashboard'}</title>
       </Head>
 
       <Container fluid className="dashboard-layout">
@@ -57,7 +51,7 @@ export const DashboardLayout = (props) => {
             <Container className="dashboard-page-content-body">
               <Container fluid className="mb-4">
                 <BreadcrumbBuilder />
-                <h3 className="dashboard-page-title">{title || "Dashboard"}</h3>
+                <h3 className="dashboard-page-title">{title || 'Dashboard'}</h3>
               </Container>
 
               {children}

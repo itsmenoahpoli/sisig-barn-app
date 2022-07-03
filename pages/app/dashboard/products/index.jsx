@@ -1,15 +1,15 @@
-import React from "react";
-import { Container, Button, Form, Card, Modal, Image } from "react-bootstrap";
+import React from 'react';
+import { Container, Button, Form, Card, Modal, Image } from 'react-bootstrap';
 
-import { DashboardLayout } from "components/layouts";
-import { TableBuilder } from "components/tables";
-import { ProductForm } from "components/forms/by-modules";
-import { ProductsService } from "lib/services";
+import { DashboardLayout } from 'components/layouts';
+import { TableBuilder } from 'components/tables';
+import { ProductForm } from 'components/forms/by-modules';
+import { ProductsService } from 'lib/services';
 
 const productsService = new ProductsService();
 
 const ProductsPage = () => {
-  const [search, setSearch] = React.useState("");
+  const [search, setSearch] = React.useState('');
   const [data, setData] = React.useState([]);
   const [loading, setLoading] = React.useState(false);
   const [productModal, setProductModal] = React.useState({
@@ -28,14 +28,14 @@ const ProductsPage = () => {
   const handleFormSubmit = async (formData) => {
     if (productModal.data) {
       await productsService.updateProductById(productModal.data.id, formData);
-      await getProducts("");
+      await getProducts('');
       setProductModal({ show: false, data: null });
 
       return;
     }
 
     await productsService.createProduct(formData);
-    await getProducts("");
+    await getProducts('');
 
     handleProductModal(false, null);
   };
@@ -45,9 +45,9 @@ const ProductsPage = () => {
   };
 
   const handleDeleteProduct = async (productId) => {
-    if (confirm("Do you confirm to delete this product?")) {
+    if (confirm('Do you confirm to delete this product?')) {
       await productsService.deleteProductById(productId);
-      await getProducts("");
+      await getProducts('');
     }
   };
 
@@ -62,52 +62,52 @@ const ProductsPage = () => {
   const tableColumns = React.useMemo(
     () => [
       {
+        // https://sisig-barn-app.pwnp-ws.com/public
         name: <p>&mdash;</p>,
         selector: (row) => row.image_url,
         sortable: true,
-        cell: row => <Container fluid className="fluid">
-          <Image src={row.image_url} alt={row.image_url} fluid style={{height: '100px', width: '100px', borderRadius: '10px'}} />
-        </Container>
+        cell: (row) =>
+          console.log(row.image_url),
+          // <Container fluid className="fluid">
+          //   <Image
+          //     src={row.image_url}
+          //     alt={row.image_url}
+          //     fluid
+          //     style={{ height: '100px', width: '100px', borderRadius: '10px' }}
+          //   />
+          // </Container>
       },
       {
-        name: "Product",
+        name: 'Product',
         selector: (row) => row.name,
         sortable: true,
       },
       {
-        name: "Category",
+        name: 'Category',
         selector: (row) => row.product_category.name,
         sortable: true,
       },
       {
-        name: "Price",
+        name: 'Price',
         selector: (row) => row.price,
         sortable: true,
       },
       {
-        name: "Description",
+        name: 'Description',
         selector: (row) => row.description,
         sortable: true,
       },
       {
-        name: "Actions",
+        name: 'Actions',
         selector: (row) => row.id,
         sortable: true,
         right: true,
         cell: (row) => (
           <>
-            <Button
-              variant="link"
-              className="mx-1"
-              onClick={() => handleEditProduct(row)}
-            >
+            <Button variant="link" className="mx-1" onClick={() => handleEditProduct(row)}>
               Edit
             </Button>
-            <Button
-              variant="link"
-              className="mx-1"
-              onClick={() => handleDeleteProduct(row.id)}
-            >
+            <Button variant="link" className="mx-1" onClick={() => handleDeleteProduct(row.id)}>
               Delete
             </Button>
           </>
@@ -117,14 +117,12 @@ const ProductsPage = () => {
     []
   );
 
-  
-
   React.useEffect(() => {
     getProducts(search);
   }, []);
 
   React.useEffect(() => {
-    if (search !== "") {
+    if (search !== '') {
       getProducts(search);
     }
   }, [search]);
@@ -132,10 +130,7 @@ const ProductsPage = () => {
     <DashboardLayout title="Products">
       <Container fluid className="datatable-header">
         <div>
-          <Button
-            variant="primary"
-            onClick={() => handleProductModal(true, null)}
-          >
+          <Button variant="primary" onClick={() => handleProductModal(true, null)}>
             Add New Product
           </Button>
         </div>
@@ -158,20 +153,13 @@ const ProductsPage = () => {
       </Card>
 
       {/* MODAL */}
-      <Modal
-        size="lg"
-        show={productModal.show}
-        onHide={() => handleProductModal(false, null)}
-      >
+      <Modal size="lg" show={productModal.show} onHide={() => handleProductModal(false, null)}>
         <Modal.Header closeButton>
           <Modal.Title>Product Form</Modal.Title>
         </Modal.Header>
 
         <Modal.Body>
-          <ProductForm
-            values={productModal.data}
-            formFns={{ formSubmitFn: handleFormSubmit }}
-          />
+          <ProductForm values={productModal.data} formFns={{ formSubmitFn: handleFormSubmit }} />
         </Modal.Body>
       </Modal>
     </DashboardLayout>
